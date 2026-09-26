@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Video Player | Bassani Studios</title>
+  <meta name="description" content="Video Player — watch Bassani Studios cinematic and crew videos.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .player-tabs {
+      display: flex;
+      gap: 0.8rem;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .player-tabs button {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 0.6rem 1.4rem;
+      border-radius: 50px;
+      border: 1px solid rgba(0,245,255,0.3);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .player-tabs button.active,
+    .player-tabs button:hover {
+      background: rgba(0,245,255,0.15);
+      color: var(--cyan);
+      border-color: var(--cyan);
+      box-shadow: 0 0 15px rgba(0,245,255,0.3);
+    }
+    .video-list-item .thumb {
+      width: 140px;
+      height: 80px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #2A1520;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="loader">
+    <div class="loader-bot"></div>
+    <div class="loader-text">Video Player</div>
+  </div>
+  <canvas id="trail-canvas"></canvas>
+
+  <nav class="navbar">
+    <a href="index.html" class="logo">BASSANI <span>STUDIOS</span></a>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="photo-studio.html">Photo Studio</a></li>
+      <li><a href="video-studio.html">Video Studio</a></li>
+      <li><a href="crews-videos.html">Crew Studio</a></li>
+      <li><a href="bassani-studios.html">Bassani Studios</a></li>
+      <li><a href="video-player.html" class="active">Video Player</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </nav>
+
+  <header class="page-header">
+    <h1>Video <span class="neon">Player</span></h1>
+    <p class="section-subtitle">Select a video from the list below to watch.</p>
+  </header>
+
+  <div class="video-player-wrapper">
+    <div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:16px; border:1px solid rgba(0,245,255,0.3); box-shadow: var(--shadow-neon);">
+      <iframe id="yt-player"
+        src="https://www.youtube-nocookie.com/embed/I4SXigRU1rI"
+        title="Bassani Studios Player"
+        style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen></iframe>
+    </div>
+    <p id="video-title" style="margin-top:1rem; font-family:var(--font-display); letter-spacing:1px;">
+      Video Studio · 01
+    </p>
+  </div>
+
+  <div class="player-tabs">
+    <button type="button" class="active" data-list="studio">Video Studio</button>
+    <button type="button" data-list="crew">Crew Studio</button>
+  </div>
+
+  <div class="video-list" id="video-list"></div>
+
+  <div class="section text-center">
+    <a href="video-studio.html" class="btn btn-outline">← Video Studio</a>
+    <a href="crews-videos.html" class="btn btn-outline" style="margin-left:0.8rem;">Crew Studio</a>
+    <a href="index.html" class="btn btn-outline" style="margin-left:0.8rem;">Home</a>
+  </div>
+
+  <div class="music-player">
+    <button id="music-play" aria-label="Play">▶</button>
+    <div class="music-info">
+      <strong>Studio Radio</strong>
+      <span>Ambient · Bassani Mix</span>
+    </div>
+    <audio id="bg-music" loop preload="none">
+      <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <footer>
+    <div class="social-links">
+      <a href="https://discord.gg/" target="_blank" rel="noopener" title="Discord">D</a>
+      <a href="https://instagram.com/" target="_blank" rel="noopener" title="Instagram">IG</a>
+      <a href="https://youtube.com/" target="_blank" rel="noopener" title="YouTube">YT</a>
+    </div>
+    <p class="footer-text">© 2026 Bassani Studios · Video Player</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    const studioVideos = [
+      { id: 'I4SXigRU1rI', title: 'Video Studio · 01' },
+      { id: 'HpSbDwHcEc4', title: 'Video Studio · 02' },
+      { id: 'KJ34Su-6L5Y', title: 'Video Studio · 03' },
+      { id: '6ikIukfmSPE', title: 'Video Studio · 04' },
+      { id: 'rHemXP2C64c', title: 'Video Studio · 05' },
+      { id: 'meEwo3tzcdA', title: 'Video Studio · 06' },
+      { id: 'p27MooCwMfY', title: 'Video Studio · 07' },
+      { id: 'CKI3O3SOT7E', title: 'Video Studio · 08' },
+      { id: 'nTontPmDBwU', title: 'Video Studio · 09' },
+      { id: 'QeoCDlaOaR8', title: 'Video Studio · 10' },
+      { id: 'SlvOl18_wDI', title: 'Video Studio · 11' },
+      { id: 'Co8bK6f6LQ8', title: 'Video Studio · 12' },
+      { id: 'YWUfr6r3NPs', title: 'Video Studio · 13' },
+      { id: 'cz48VsiseDY', title: 'Video Studio · 14' },
+      { id: 't688CqCNHis', title: 'Video Studio · 15' },
+      { id: '8k0fwcvX6AE', title: 'Video Studio · 16' },
+      { id: 'wMfs9F7t45k', title: 'Video Studio · 17' },
+      { id: 'fYrCm2IqUSs', title: 'Video Studio · 18' },
+      { id: 'MPSqCdB0T5Q', title: 'Video Studio · 19' },
+      { id: 'AAhpAm8ww9c', title: 'Video Studio · 20' },
+      { id: 'ZV9G636MwDU', title: 'Video Studio · 21' },
+      { id: '2xF_dOhdn6A', title: 'Video Studio · 22' },
+      { id: 'QzzJYE4kiO4', title: 'Video Studio · 23' },
+      { id: 'd8s--aqQwi4', title: 'Video Studio · 24' }
+    ];
+
+    const crewVideos = [
+      { id: 'Vr12OV3HdP0', title: 'Crew Studio · 01' },
+      { id: 'oedNqFZHiXQ', title: 'Crew Studio · 02' },
+      { id: '5NQiD3wLVDA', title: 'Crew Studio · 03' },
+      { id: 'dmn52BzSpIE', title: 'Crew Studio · 04' },
+      { id: 'ZuBgfLrqKXA', title: 'Crew Studio · 05' },
+      { id: 'ITT3wjilYNQ', title: 'Crew Studio · 06' },
+      { id: 'obUqrlOs4_o', title: 'Crew Studio · 07' },
+      { id: '7fdb-ZCIhHc', title: 'Crew Studio · 08' },
+      { id: 'sgZe5k3OBLE', title: 'Crew Studio · 09' },
+      { id: 'WRmNSql61ck', title: 'Crew Studio · 10' },
+      { id: 'buznXndQ8S0', title: 'Crew Studio · 11' },
+      { id: 'TrIW2pfB5jw', title: 'Crew Studio · 12' },
+      { id: 'DNLhp1ksOUQ', title: 'Crew Studio · 13' },
+      { id: 'sJHeHWb1FG8', title: 'Crew Studio · 14' },
+      { id: 'WjZX0OFtQJQ', title: 'Crew Studio · 15' },
+      { id: 'O5QTof4mE8M', title: 'Crew Studio · 16' },
+      { id: '-TDOn0Z3uaY', title: 'Crew Studio · 17' },
+      { id: 'mskVqOz2B80', title: 'Crew Studio · 18' },
+      { id: 'gt2aL_imhoc', title: 'Crew Studio · 19' },
+      { id: 'gYI0J4YDFUE', title: 'Crew Studio · 20' },
+      { id: 'xXME9wPasnM', title: 'Crew Studio · 21' },
+      { id: 'ASvvvFyuxt8', title: 'Crew Studio · 22' },
+      { id: 'rrlcXtzQ1ZI', title: 'Crew Studio · 23' },
+      { id: 'r6XwtU_kRZQ', title: 'Crew Studio · 24' }
+    ];
+
+    const listEl = document.getElementById('video-list');
+    const player = document.getElementById('yt-player');
+    const titleEl = document.getElementById('video-title');
+    let currentList = 'studio';
+
+    function renderList(listName) {
+      currentList = listName;
+      const videos = listName === 'crew' ? crewVideos : studioVideos;
+      listEl.innerHTML = '';
+      videos.forEach((v, i) => {
+        const div = document.createElement('div');
+        div.className = 'video-list-item' + (i === 0 && !getUrlVideo() ? ' active' : '');
+        div.dataset.id = v.id;
+        div.innerHTML = `
+          <img class="thumb" src="https://img.youtube.com/vi/${v.id}/mqdefault.jpg" alt="${v.title}" loading="lazy">
+          <div class="info">
+            <h4>${v.title}</h4>
+            <p>Click to play</p>
+          </div>
+        `;
+        div.addEventListener('click', () => playVideo(v.id, v.title, div));
+        listEl.appendChild(div);
+      });
+      document.querySelectorAll('.player-tabs button').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.list === listName);
+      });
+    }
+
+    function playVideo(id, title, el) {
+      // youtube-nocookie + referrerpolicy helps avoid Error 153
+      player.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+      titleEl.textContent = title;
+      document.querySelectorAll('.video-list-item').forEach(i => i.classList.remove('active'));
+      if (el) el.classList.add('active');
+      const url = new URL(window.location);
+      url.searchParams.set('v', id);
+      url.searchParams.set('list', currentList);
+      history.replaceState(null, '', url);
+    }
+
+    function getUrlVideo() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('v');
+    }
+
+    document.querySelectorAll('.player-tabs button').forEach(btn => {
+      btn.addEventListener('click', () => renderList(btn.dataset.list));
+    });
+
+    // Init from URL
+    const params = new URLSearchParams(window.location.search);
+    const startList = params.get('list') === 'crew' ? 'crew' : 'studio';
+    const startId = params.get('v');
+    renderList(startList);
+
+    if (startId) {
+      const videos = startList === 'crew' ? crewVideos : studioVideos;
+      const found = videos.find(v => v.id === startId);
+      if (found) {
+        playVideo(found.id, found.title);
+        // mark active
+        setTimeout(() => {
+          document.querySelectorAll('.video-list-item').forEach(item => {
+            item.classList.toggle('active', item.dataset.id === startId);
+          });
+        }, 50);
+      }
+    }
+  </script>
+</body>
+</html>

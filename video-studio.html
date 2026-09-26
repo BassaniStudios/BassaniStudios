@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Studio | Bassani Studios</title>
+  <meta name="description" content="Video Studio — cinematic videos from Bassani Studios.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      padding: 0 2rem 4rem;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    .video-card {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid rgba(0, 245, 255, 0.15);
+      transition: all 0.35s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .video-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--cyan);
+      box-shadow: var(--shadow-neon);
+    }
+    .video-card img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+      background: #2A1520;
+    }
+    .video-card .body {
+      padding: 1rem 1.2rem;
+    }
+    .video-card h3 {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+      margin-bottom: 0.3rem;
+    }
+    .video-card p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <div id="loader">
+    <div class="loader-bot"></div>
+    <div class="loader-text">Video Studio</div>
+  </div>
+  <canvas id="trail-canvas"></canvas>
+
+  <nav class="navbar">
+    <a href="index.html" class="logo">BASSANI <span>STUDIOS</span></a>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="photo-studio.html">Photo Studio</a></li>
+      <li><a href="video-studio.html" class="active">Video Studio</a></li>
+      <li><a href="crews-videos.html">Crew Studio</a></li>
+      <li><a href="bassani-studios.html">Bassani Studios</a></li>
+      <li><a href="video-player.html">Video Player</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </nav>
+
+  <header class="page-header">
+    <h1>Video <span class="neon">Studio</span></h1>
+    <p class="section-subtitle">Cinematic videos, stories and moments. Click any video to watch in the player.</p>
+  </header>
+
+  <div class="video-grid" id="video-studio-grid"></div>
+
+  <div class="section text-center">
+    <a href="video-player.html" class="btn btn-primary">Open Video Player</a>
+    <a href="index.html" class="btn btn-outline" style="margin-left:0.8rem;">← Home</a>
+  </div>
+
+  <div class="music-player">
+    <button id="music-play" aria-label="Play">▶</button>
+    <div class="music-info">
+      <strong>Studio Radio</strong>
+      <span>Ambient · Bassani Mix</span>
+    </div>
+    <audio id="bg-music" loop preload="none">
+      <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <footer>
+    <div class="social-links">
+      <a href="https://discord.gg/" target="_blank" rel="noopener" title="Discord">D</a>
+      <a href="https://instagram.com/" target="_blank" rel="noopener" title="Instagram">IG</a>
+      <a href="https://youtube.com/" target="_blank" rel="noopener" title="YouTube">YT</a>
+    </div>
+    <p class="footer-text">© 2026 Bassani Studios · Video Studio</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    const videos = [
+      { id: 'I4SXigRU1rI', title: 'Video Studio · 01' },
+      { id: 'HpSbDwHcEc4', title: 'Video Studio · 02' },
+      { id: 'KJ34Su-6L5Y', title: 'Video Studio · 03' },
+      { id: '6ikIukfmSPE', title: 'Video Studio · 04' },
+      { id: 'rHemXP2C64c', title: 'Video Studio · 05' },
+      { id: 'meEwo3tzcdA', title: 'Video Studio · 06' },
+      { id: 'p27MooCwMfY', title: 'Video Studio · 07' },
+      { id: 'CKI3O3SOT7E', title: 'Video Studio · 08' },
+      { id: 'nTontPmDBwU', title: 'Video Studio · 09' },
+      { id: 'QeoCDlaOaR8', title: 'Video Studio · 10' },
+      { id: 'SlvOl18_wDI', title: 'Video Studio · 11' },
+      { id: 'Co8bK6f6LQ8', title: 'Video Studio · 12' },
+      { id: 'YWUfr6r3NPs', title: 'Video Studio · 13' },
+      { id: 'cz48VsiseDY', title: 'Video Studio · 14' },
+      { id: 't688CqCNHis', title: 'Video Studio · 15' },
+      { id: '8k0fwcvX6AE', title: 'Video Studio · 16' },
+      { id: 'wMfs9F7t45k', title: 'Video Studio · 17' },
+      { id: 'fYrCm2IqUSs', title: 'Video Studio · 18' },
+      { id: 'MPSqCdB0T5Q', title: 'Video Studio · 19' },
+      { id: 'AAhpAm8ww9c', title: 'Video Studio · 20' },
+      { id: 'ZV9G636MwDU', title: 'Video Studio · 21' },
+      { id: '2xF_dOhdn6A', title: 'Video Studio · 22' },
+      { id: 'QzzJYE4kiO4', title: 'Video Studio · 23' },
+      { id: 'd8s--aqQwi4', title: 'Video Studio · 24' }
+    ];
+    const grid = document.getElementById('video-studio-grid');
+    videos.forEach(v => {
+      const a = document.createElement('a');
+      a.href = `video-player.html?v=${v.id}&list=studio`;
+      a.className = 'video-card';
+      a.innerHTML = `<img src="https://img.youtube.com/vi/${v.id}/hqdefault.jpg" alt="${v.title}" loading="lazy"><div class="body"><h3>${v.title}</h3><p>Watch in Video Player →</p></div>`;
+      grid.appendChild(a);
+    });
+  </script>
+</body>
+</html>

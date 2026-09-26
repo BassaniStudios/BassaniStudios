@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About | Bassani Studios</title>
+  <meta name="description" content="About Bassani Studios — digital studio for cinematic videos, characters and stories from GTA and beyond.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div id="loader">
+    <div class="loader-bot"></div>
+    <div class="loader-text">About</div>
+  </div>
+  <canvas id="trail-canvas"></canvas>
+
+  <nav class="navbar">
+    <a href="index.html" class="logo">BASSANI <span>STUDIOS</span></a>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="photo-studio.html">Photo Studio</a></li>
+      <li><a href="video-studio.html">Video Studio</a></li>
+      <li><a href="crews-videos.html">Crew Studio</a></li>
+      <li><a href="bassani-studios.html">Bassani Studios</a></li>
+      <li><a href="video-player.html">Video Player</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+    </ul>
+  </nav>
+
+  <header class="page-header">
+    <h1>About the <span class="neon">Studio</span></h1>
+    <p class="section-subtitle">Welcome to Bassani Studios.</p>
+  </header>
+
+  <section class="section" style="max-width:720px;">
+    <div class="banner-3d">
+      <div class="banner-3d-inner" style="text-align:left;">
+        <h2 style="text-align:center; margin-bottom:1.2rem;">🎬 Bassani Studios</h2>
+        <p style="color: var(--text-muted); margin-bottom:1rem;">
+          Welcome to Bassani Studios — a place where virtual worlds become stories.
+        </p>
+        <p style="color: var(--text-muted); margin-bottom:1rem;">
+          Here, you’ll find cinematic videos, characters, everyday moments, adventures and stories created inside the worlds of GTA and beyond.
+        </p>
+        <p style="color: var(--text-muted); margin-bottom:1rem;">
+          From quiet days in Los Santos to unexpected situations, special events and cinematic scenes, every video is a new moment to experience.
+        </p>
+        <p style="color: var(--cyan); font-weight: 600; text-align:center; margin-top:1.5rem;">
+          🎥 Stories. Moments. Characters. Worlds.
+        </p>
+        <p style="color: var(--salmon); font-weight: 600; text-align:center;">
+          This is Bassani Studios.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section text-center">
+    <h2 class="section-title">Social <span class="neon">Links</span></h2>
+    <p class="section-subtitle">Follow and join the community</p>
+    <div class="social-links" style="margin-bottom:2rem;">
+      <a href="https://discord.gg/" target="_blank" rel="noopener" title="Discord" style="width:56px; height:56px; font-size:1.4rem;">D</a>
+      <a href="https://instagram.com/" target="_blank" rel="noopener" title="Instagram" style="width:56px; height:56px; font-size:1.4rem;">IG</a>
+      <a href="https://youtube.com/" target="_blank" rel="noopener" title="YouTube" style="width:56px; height:56px; font-size:1.4rem;">YT</a>
+    </div>
+    <p style="color: var(--text-muted); font-size:0.9rem;">
+      Replace the links above with the official Bassani Studios Discord, Instagram and YouTube.
+    </p>
+    <div class="mt-2">
+      <a href="index.html" class="btn btn-outline">← Back to Home</a>
+    </div>
+  </section>
+
+  <div class="music-player">
+    <button id="music-play" aria-label="Play">▶</button>
+    <div class="music-info">
+      <strong>Studio Radio</strong>
+      <span>Ambient · Bassani Mix</span>
+    </div>
+    <audio id="bg-music" loop preload="none">
+      <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <footer>
+    <div class="social-links">
+      <a href="https://discord.gg/" target="_blank" rel="noopener" title="Discord">D</a>
+      <a href="https://instagram.com/" target="_blank" rel="noopener" title="Instagram">IG</a>
+      <a href="https://youtube.com/" target="_blank" rel="noopener" title="YouTube">YT</a>
+    </div>
+    <p class="footer-text">© 2026 Bassani Studios · Digital Studio</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Photo Studio | Bassani Studios</title>
+  <meta name="description" content="Photo Studio — 1244 digital photos. Dense grid, spotlight, slideshow and discovery mode.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* ===== PHOTO STUDIO SPECIFIC ===== */
+    .ps-hero {
+      padding: 8rem 1.5rem 2.5rem;
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .ps-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      letter-spacing: 2px;
+      margin-bottom: 0.6rem;
+    }
+    .ps-counter {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 1rem 0 1.5rem;
+      padding: 0.5rem 1.4rem;
+      border: 1px solid rgba(0, 245, 255, 0.35);
+      border-radius: 50px;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      letter-spacing: 2px;
+      color: var(--cyan);
+      box-shadow: 0 0 20px rgba(0, 245, 255, 0.15);
+    }
+    .ps-counter strong {
+      color: #fff;
+      font-size: 1.15rem;
+    }
+    .ps-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      justify-content: center;
+      margin-bottom: 0.5rem;
+    }
+    .ps-actions .btn {
+      padding: 0.7rem 1.3rem;
+      font-size: 0.8rem;
+    }
+    .ps-actions .btn.active {
+      background: rgba(0, 245, 255, 0.2);
+      border-color: var(--cyan);
+      color: var(--cyan);
+      box-shadow: 0 0 18px rgba(0, 245, 255, 0.35);
+    }
+
+    /* Dense grid */
+    .ps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 6px;
+      padding: 0 1rem 1rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    @media (min-width: 768px) {
+      .ps-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; }
+    }
+    @media (min-width: 1200px) {
+      .ps-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
+    }
+    .ps-thumb {
+      aspect-ratio: 1;
+      overflow: hidden;
+      border-radius: 6px;
+      cursor: pointer;
+      position: relative;
+      background: #2A1520;
+      border: 1px solid transparent;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+    .ps-thumb:hover {
+      transform: scale(1.04);
+      border-color: var(--cyan);
+      box-shadow: 0 0 16px rgba(0, 245, 255, 0.4);
+      z-index: 2;
+    }
+    .ps-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .ps-thumb .num {
+      position: absolute;
+      bottom: 4px;
+      right: 6px;
+      font-size: 0.65rem;
+      font-family: var(--font-display);
+      color: rgba(255,255,255,0.7);
+      text-shadow: 0 1px 3px #000;
+      pointer-events: none;
+    }
+
+    /* Load more */
+    .ps-load-wrap {
+      text-align: center;
+      padding: 1.5rem 1rem 3rem;
+    }
+    .ps-load-btn {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 2px solid var(--cyan);
+      background: rgba(0, 245, 255, 0.08);
+      color: var(--cyan);
+      font-size: 2rem;
+      font-weight: 300;
+      cursor: pointer;
+      transition: all 0.3s;
+      line-height: 1;
+      box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
+    }
+    .ps-load-btn:hover {
+      background: rgba(0, 245, 255, 0.2);
+      transform: scale(1.08);
+      box-shadow: 0 0 30px rgba(0, 245, 255, 0.45);
+    }
+    .ps-load-btn:disabled {
+      opacity: 0.35;
+      cursor: default;
+      transform: none;
+    }
+    .ps-load-info {
+      margin-top: 0.8rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+
+    /* Spotlight mode */
+    .ps-spotlight {
+      display: none;
+      max-width: 960px;
+      margin: 0 auto 3rem;
+      padding: 0 1rem;
+      text-align: center;
+    }
+    .ps-spotlight.active { display: block; }
+    .ps-spotlight-frame {
+      position: relative;
+      background: #0a0508;
+      border-radius: var(--radius);
+      border: 1px solid rgba(0, 245, 255, 0.25);
+      box-shadow: var(--shadow-neon);
+      overflow: hidden;
+      min-height: 50vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ps-spotlight-frame img {
+      max-width: 100%;
+      max-height: 75vh;
+      object-fit: contain;
+      display: block;
+    }
+    .ps-spot-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      margin-top: 1.2rem;
+    }
+    .ps-spot-nav button {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--cyan);
+      background: rgba(0, 245, 255, 0.1);
+      color: var(--cyan);
+      font-size: 1.4rem;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .ps-spot-nav button:hover {
+      background: var(--cyan);
+      color: var(--bg-dark);
+      box-shadow: 0 0 18px var(--cyan);
+    }
+    .ps-spot-label {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      min-width: 100px;
+    }
+
+    /* Lightbox */
+    .ps-lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: rgba(8, 4, 10, 0.96);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .ps-lightbox.open { display: flex; }
+    .ps-lightbox img {
+      max-width: min(96vw, 1200px);
+      max-height: 82vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 0 40px rgba(0, 245, 255, 0.2);
+    }
+    .ps-lb-bar {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .ps-lb-bar button {
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      border: 1px solid rgba(0, 245, 255, 0.4);
+      background: rgba(0, 245, 255, 0.1);
+      color: var(--cyan);
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .ps-lb-bar button:hover {
+      background: var(--cyan);
+      color: var(--bg-dark);
+    }
+    .ps-lb-count {
+      font-family: var(--font-display);
+      color: var(--text-muted);
+      letter-spacing: 2px;
+      font-size: 0.9rem;
+    }
+    .ps-lb-close {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .ps-lb-close:hover { opacity: 1; }
+    .ps-lb-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(0,0,0,0.4);
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .ps-lb-arrow:hover { background: rgba(0, 245, 255, 0.3); }
+    .ps-lb-prev { left: 1rem; }
+    .ps-lb-next { right: 1rem; }
+
+    /* Hide grid when spotlight */
+    body.mode-spotlight .ps-grid,
+    body.mode-spotlight .ps-load-wrap { display: none; }
+    body.mode-grid .ps-spotlight { display: none; }
+
+    .ps-hint {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      padding: 0 1rem 1rem;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body class="mode-grid">
+  <div id="loader">
+    <div class="loader-bot"></div>
+    <div class="loader-text">Photo Studio</div>
+  </div>
+  <canvas id="trail-canvas"></canvas>
+
+  <nav class="navbar">
+    <a href="index.html" class="logo">BASSANI <span>STUDIOS</span></a>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="photo-studio.html" class="active">Photo Studio</a></li>
+      <li><a href="video-studio.html">Video Studio</a></li>
+      <li><a href="crews-videos.html">Crew Studio</a></li>
+      <li><a href="bassani-studios.html">Bassani Studios</a></li>
+      <li><a href="video-player.html">Video Player</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="ps-hero">
+    <h1>Photo <span class="neon">Studio</span></h1>
+    <p style="color: var(--text-muted); margin-bottom: 0.3rem;">
+      Digital art · discovery mode · no forced order
+    </p>
+    <div class="ps-counter">
+      <span>GALLERY</span>
+      <strong id="ps-total">1244</strong>
+      <span>PHOTOS</span>
+    </div>
+    <div class="ps-actions">
+      <button type="button" class="btn btn-outline active" id="btn-grid" title="Dense grid">Grid</button>
+      <button type="button" class="btn btn-outline" id="btn-spotlight" title="One large photo">Spotlight</button>
+      <button type="button" class="btn btn-primary" id="btn-surprise">Surprise me</button>
+      <button type="button" class="btn btn-outline" id="btn-slideshow">Slideshow</button>
+    </div>
+  </div>
+
+  <p class="ps-hint" id="ps-hint">
+    Dense overview · click a photo to open · arrow keys in fullscreen · load more with +
+  </p>
+
+  <!-- DENSE GRID -->
+  <div class="ps-grid" id="ps-grid" aria-label="Photo grid"></div>
+  <div class="ps-load-wrap" id="ps-load-wrap">
+    <button type="button" class="ps-load-btn" id="ps-load-more" title="Load more photos">+</button>
+    <p class="ps-load-info" id="ps-load-info">Showing 0 of 1244</p>
+  </div>
+
+  <!-- SPOTLIGHT -->
+  <div class="ps-spotlight" id="ps-spotlight">
+    <div class="ps-spotlight-frame">
+      <img id="ps-spot-img" src="" alt="Spotlight photo">
+    </div>
+    <div class="ps-spot-nav">
+      <button type="button" id="ps-spot-prev" aria-label="Previous">‹</button>
+      <span class="ps-spot-label" id="ps-spot-label">1 / 1244</span>
+      <button type="button" id="ps-spot-next" aria-label="Next">›</button>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="ps-lightbox" id="ps-lightbox" role="dialog" aria-modal="true">
+    <button type="button" class="ps-lb-close" id="ps-lb-close" aria-label="Close">×</button>
+    <button type="button" class="ps-lb-arrow ps-lb-prev" id="ps-lb-prev" aria-label="Previous">‹</button>
+    <img id="ps-lb-img" src="" alt="Full photo">
+    <button type="button" class="ps-lb-arrow ps-lb-next" id="ps-lb-next" aria-label="Next">›</button>
+    <div class="ps-lb-bar">
+      <span class="ps-lb-count" id="ps-lb-count">1 / 1244</span>
+      <button type="button" id="ps-lb-random">Random</button>
+      <button type="button" id="ps-lb-open">Open full size</button>
+    </div>
+  </div>
+
+  <div class="music-player">
+    <button id="music-play" aria-label="Play">▶</button>
+    <div class="music-info">
+      <strong>Studio Radio</strong>
+      <span>Ambient · Bassani Mix</span>
+    </div>
+    <audio id="bg-music" loop preload="none">
+      <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <footer>
+    <div class="social-links">
+      <a href="https://discord.gg/" target="_blank" rel="noopener" title="Discord">D</a>
+      <a href="https://instagram.com/" target="_blank" rel="noopener" title="Instagram">IG</a>
+      <a href="https://youtube.com/" target="_blank" rel="noopener" title="YouTube">YT</a>
+    </div>
+    <p class="footer-text">© 2026 Bassani Studios · Photo Studio</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+  (function () {
+    /* =========================================================
+       CONFIG — adjust when you have a working public URL
+       Folder on ImageKit: BASSANI STUDIOS PHOTO WEB
+       Files named: photo (1), photo (2), ... photo (1244)
+       ========================================================= */
+    const TOTAL = 1244;
+    const BATCH = 50;
+
+    // Try this pattern first. If images 404, change BASE + EXT.
+    // ImageKit public URL example (edit to match your real path):
+    const BASE = 'https://ik.imagekit.io/BassaniStudios/BASSANI%20STUDIOS%20PHOTO%20WEB/';
+    const NAME = (n) => `photo%20(${n})`;  // photo (1)
+    const EXT = '.jpg';                     // try .png / .jpeg / .webp if needed
+
+    // Thumbnail transform (lighter for dense grid)
+    const THUMB = (n) => `${BASE}${NAME(n)}${EXT}?tr=w-320,h-320,fo-auto,q-65`;
+    const FULL  = (n) => `${BASE}${NAME(n)}${EXT}?tr=w-1600,q-85`;
+    const ORIG  = (n) => `${BASE}${NAME(n)}${EXT}`;
+
+    /* State */
+    let loaded = 0;
+    let spotIndex = 1;
+    let lbIndex = 1;
+    let slideshowTimer = null;
+
+    const grid = document.getElementById('ps-grid');
+    const loadBtn = document.getElementById('ps-load-more');
+    const loadInfo = document.getElementById('ps-load-info');
+    const totalEl = document.getElementById('ps-total');
+    totalEl.textContent = TOTAL;
+
+    function updateLoadInfo() {
+      loadInfo.textContent = `Showing ${loaded} of ${TOTAL}`;
+      loadBtn.disabled = loaded >= TOTAL;
+      if (loaded >= TOTAL) loadBtn.title = 'All photos loaded';
+    }
+
+    function addThumbs(from, to) {
+      const frag = document.createDocumentFragment();
+      for (let n = from; n <= to; n++) {
+        const div = document.createElement('div');
+        div.className = 'ps-thumb';
+        div.dataset.n = n;
+        div.innerHTML = `<img src="${THUMB(n)}" alt="Photo ${n}" loading="lazy" decoding="async"><span class="num">${n}</span>`;
+        div.addEventListener('click', () => openLightbox(n));
+        frag.appendChild(div);
+      }
+      grid.appendChild(frag);
+      loaded = to;
+      updateLoadInfo();
+    }
+
+    function loadMore() {
+      if (loaded >= TOTAL) return;
+      const next = Math.min(loaded + BATCH, TOTAL);
+      addThumbs(loaded + 1, next);
+    }
+
+    /* Initial batch */
+    addThumbs(1, Math.min(BATCH, TOTAL));
+    loadBtn.addEventListener('click', loadMore);
+
+    /* Modes */
+    const btnGrid = document.getElementById('btn-grid');
+    const btnSpot = document.getElementById('btn-spotlight');
+    const spotWrap = document.getElementById('ps-spotlight');
+    const spotImg = document.getElementById('ps-spot-img');
+    const spotLabel = document.getElementById('ps-spot-label');
+
+    function setMode(mode) {
+      document.body.classList.toggle('mode-grid', mode === 'grid');
+      document.body.classList.toggle('mode-spotlight', mode === 'spotlight');
+      btnGrid.classList.toggle('active', mode === 'grid');
+      btnSpot.classList.toggle('active', mode === 'spotlight');
+      spotWrap.classList.toggle('active', mode === 'spotlight');
+      if (mode === 'spotlight') showSpot(spotIndex);
+      stopSlideshow();
+    }
+
+    function showSpot(n) {
+      spotIndex = ((n - 1 + TOTAL) % TOTAL) + 1;
+      spotImg.src = FULL(spotIndex);
+      spotLabel.textContent = `${spotIndex} / ${TOTAL}`;
+    }
+
+    btnGrid.addEventListener('click', () => setMode('grid'));
+    btnSpot.addEventListener('click', () => setMode('spotlight'));
+    document.getElementById('ps-spot-prev').addEventListener('click', () => showSpot(spotIndex - 1));
+    document.getElementById('ps-spot-next').addEventListener('click', () => showSpot(spotIndex + 1));
+
+    /* Surprise me → random in lightbox */
+    document.getElementById('btn-surprise').addEventListener('click', () => {
+      const n = Math.floor(Math.random() * TOTAL) + 1;
+      openLightbox(n);
+    });
+
+    /* Slideshow */
+    document.getElementById('btn-slideshow').addEventListener('click', () => {
+      if (slideshowTimer) {
+        stopSlideshow();
+        return;
+      }
+      openLightbox(lbIndex || 1);
+      slideshowTimer = setInterval(() => {
+        lbIndex = (lbIndex % TOTAL) + 1;
+        setLightbox(lbIndex);
+      }, 3500);
+      document.getElementById('btn-slideshow').textContent = 'Stop slideshow';
+    });
+
+    function stopSlideshow() {
+      if (slideshowTimer) {
+        clearInterval(slideshowTimer);
+        slideshowTimer = null;
+        document.getElementById('btn-slideshow').textContent = 'Slideshow';
+      }
+    }
+
+    /* Lightbox */
+    const lb = document.getElementById('ps-lightbox');
+    const lbImg = document.getElementById('ps-lb-img');
+    const lbCount = document.getElementById('ps-lb-count');
+
+    function setLightbox(n) {
+      lbIndex = ((n - 1 + TOTAL) % TOTAL) + 1;
+      lbImg.src = FULL(lbIndex);
+      lbCount.textContent = `${lbIndex} / ${TOTAL}`;
+    }
+
+    function openLightbox(n) {
+      setLightbox(n);
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+      stopSlideshow();
+    }
+
+    document.getElementById('ps-lb-close').addEventListener('click', closeLightbox);
+    document.getElementById('ps-lb-prev').addEventListener('click', () => setLightbox(lbIndex - 1));
+    document.getElementById('ps-lb-next').addEventListener('click', () => setLightbox(lbIndex + 1));
+    document.getElementById('ps-lb-random').addEventListener('click', () => {
+      setLightbox(Math.floor(Math.random() * TOTAL) + 1);
+    });
+    document.getElementById('ps-lb-open').addEventListener('click', () => {
+      window.open(ORIG(lbIndex), '_blank');
+    });
+
+    lb.addEventListener('click', (e) => {
+      if (e.target === lb) closeLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!lb.classList.contains('open')) {
+        if (document.body.classList.contains('mode-spotlight')) {
+          if (e.key === 'ArrowLeft') showSpot(spotIndex - 1);
+          if (e.key === 'ArrowRight') showSpot(spotIndex + 1);
+        }
+        return;
+      }
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') setLightbox(lbIndex - 1);
+      if (e.key === 'ArrowRight') setLightbox(lbIndex + 1);
+      if (e.key === 'r' || e.key === 'R') setLightbox(Math.floor(Math.random() * TOTAL) + 1);
+    });
+  })();
+  </script>
+</body>
+</html>

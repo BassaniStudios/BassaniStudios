@@ -1,0 +1,101 @@
+============================================
+  BASSANI STUDIOS — SITE SUMMARY
+  Updated: 25/09/2026
+============================================
+
+SITE GOAL
+---------
+Showcase for photos and videos from Bassani Studios.
+Digital studio focused on GTA-related cinematic content.
+Audience: gamers who love digital art.
+Tone: friendly.
+
+
+TECHNOLOGY
+----------
+- HTML5 + CSS3 + Vanilla JavaScript
+- No frameworks (lightweight, easy to host)
+- Fonts: Orbitron + Rajdhani (Google Fonts)
+- Fully responsive
+
+
+PAGE STRUCTURE
+--------------
+1. index.html           → Home (hero + gallery previews + slides + 3D banner)
+2. photo-studio.html    → Photo gallery (placeholders ready for your links)
+3. video-studio.html    → Video Studio grid (24 YouTube videos)
+4. crews-videos.html    → Crew Studio grid (24 YouTube videos)
+5. bassani-studios.html → Brand page
+6. video-player.html    → Dedicated player with both lists + iframe
+7. about.html           → About the studio + social links
+
+
+WHAT WAS DONE IN THIS UPDATE
+----------------------------
+✓ Full site translated to English (no Portuguese left)
+✓ Hero text: "Welcome to Bassani Studios. Photos and videos made for gamers who love digital art."
+✓ Removed all mentions of Vice City and color descriptions
+✓ Banner text: "Digital art with the energy of GTA 5."
+✓ About page text replaced with the provided English description
+✓ Brand page text about transforming virtual worlds into stories
+✓ Dedicated pages for Photo Studio, Video Studio, Crew Studio, etc.
+✓ All Video Studio YouTube links added (24 videos, ordered as requested)
+✓ All Crew Studio YouTube links added (24 videos, ordered as requested)
+✓ Video Player with tabs (Video Studio / Crew Studio) + autoplay from URL
+✓ YouTube thumbnails on all video cards
+✓ Navigation fully in English (About instead of Sobre)
+
+
+VIDEO ORDER — VIDEO STUDIO
+--------------------------
+1. I4SXigRU1rI
+2. HpSbDwHcEc4
+3. KJ34Su-6L5Y
+4. 6ikIukfmSPE
+5. rHemXP2C64c
+6. meEwo3tzcdA
+7. p27MooCwMfY
+8. CKI3O3SOT7E
+9–24. remaining list as provided
+
+
+VIDEO ORDER — CREW STUDIO
+-------------------------
+1–15. the "leave at the beginning" list
+16–24. the original Crew list
+
+
+STILL TO DO (when you send)
+---------------------------
+1. Photo links → replace placeholders in photo-studio.html
+2. Official Discord / Instagram / YouTube URLs
+3. Optional: custom background music for the corner player
+4. Optional: favicon + Open Graph tags
+
+
+HOW TO TEST
+-----------
+1. Extract the zip
+2. Open index.html in your browser
+3. Use the menu to open each dedicated page
+4. Click any video card → opens Video Player with that video
+
+
+FILES
+-----
+bassani-studios/
+├── index.html
+├── photo-studio.html
+├── video-studio.html
+├── crews-videos.html
+├── bassani-studios.html
+├── video-player.html
+├── about.html
+├── sumario.txt
+├── css/styles.css
+├── js/main.js
+└── assets/
+
+============================================
+  Bassani Studios · Digital Studio 2026
+============================================

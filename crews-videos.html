@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crew Studio | Bassani Studios</title>
+  <meta name="description" content="Crew Studio — crew videos and collabs from Bassani Studios.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      padding: 0 2rem 4rem;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    .video-card {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid rgba(0, 245, 255, 0.15);
+      transition: all 0.35s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .video-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--cyan);
+      box-shadow: var(--shadow-neon);
+    }
+    .video-card img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+      background: #2A1520;
+    }
+    .video-card .body {
+      padding: 1rem 1.2rem;
+    }
+    .video-card h3 {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+      margin-bottom: 0.3rem;
+    }
+    .video-card p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <div id="loader">
+    <div class="loader-bot"></div>
+    <div class="loader-text">Crew Studio</div>
+  </div>
+  <canvas id="trail-canvas"></canvas>
+
+  <nav class="navbar">
+    <a href="index.html" class="logo">BASSANI <span>STUDIOS</span></a>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="photo-studio.html">Photo Studio</a></li>
+      <li><a href="video-studio.html">Video Studio</a></li>
+      <li><a href="crews-videos.html" class="active">Crew Studio</a></li>
+      <li><a href="bassani-studios.html">Bassani Studios</a></li>
+      <li><a href="video-player.html">Video Player</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </nav>
+
+  <header class="page-header">
+    <h1>Crew <span class="neon">Studio</span></h1>
+    <p class="section-subtitle">Crew content and community collabs. Click any video to watch in the player.</p>
+  </header>
+
+  <div class="video-grid" id="crew-grid"></div>
+
+  <div class="section text-center">
+    <a href="video-player.html?list=crew" class="btn btn-primary">Open Video Player</a>
+    <a href="index.html" class="btn btn-outline" style="margin-left:0.8rem;">← Home</a>
+  </div>
+
+  <div class="music-player">
+    <button id="music-play" aria-label="Play">▶</button>
+    <div class="music-info">
+      <strong>Studio Radio</strong>
+      <span>Ambient · Bassani Mix</span>
+    </div>
+    <audio id="bg-music" loop preload="none">
+      <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <footer>
+    <div class="social-links">
+      <a href="https://discord.gg/" target="_blank" rel="noopener" title="Discord">D</a>
+      <a href="https://instagram.com/" target="_blank" rel="noopener" title="Instagram">IG</a>
+      <a href="https://youtube.com/" target="_blank" rel="noopener" title="YouTube">YT</a>
+    </div>
+    <p class="footer-text">© 2026 Bassani Studios · Crew Studio</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    const videos = [
+      { id: 'Vr12OV3HdP0', title: 'Crew Studio · 01' },
+      { id: 'oedNqFZHiXQ', title: 'Crew Studio · 02' },
+      { id: '5NQiD3wLVDA', title: 'Crew Studio · 03' },
+      { id: 'dmn52BzSpIE', title: 'Crew Studio · 04' },
+      { id: 'ZuBgfLrqKXA', title: 'Crew Studio · 05' },
+      { id: 'ITT3wjilYNQ', title: 'Crew Studio · 06' },
+      { id: 'obUqrlOs4_o', title: 'Crew Studio · 07' },
+      { id: '7fdb-ZCIhHc', title: 'Crew Studio · 08' },
+      { id: 'sgZe5k3OBLE', title: 'Crew Studio · 09' },
+      { id: 'WRmNSql61ck', title: 'Crew Studio · 10' },
+      { id: 'buznXndQ8S0', title: 'Crew Studio · 11' },
+      { id: 'TrIW2pfB5jw', title: 'Crew Studio · 12' },
+      { id: 'DNLhp1ksOUQ', title: 'Crew Studio · 13' },
+      { id: 'sJHeHWb1FG8', title: 'Crew Studio · 14' },
+      { id: 'WjZX0OFtQJQ', title: 'Crew Studio · 15' },
+      { id: 'O5QTof4mE8M', title: 'Crew Studio · 16' },
+      { id: '-TDOn0Z3uaY', title: 'Crew Studio · 17' },
+      { id: 'mskVqOz2B80', title: 'Crew Studio · 18' },
+      { id: 'gt2aL_imhoc', title: 'Crew Studio · 19' },
+      { id: 'gYI0J4YDFUE', title: 'Crew Studio · 20' },
+      { id: 'xXME9wPasnM', title: 'Crew Studio · 21' },
+      { id: 'ASvvvFyuxt8', title: 'Crew Studio · 22' },
+      { id: 'rrlcXtzQ1ZI', title: 'Crew Studio · 23' },
+      { id: 'r6XwtU_kRZQ', title: 'Crew Studio · 24' }
+    ];
+    const grid = document.getElementById('crew-grid');
+    videos.forEach(v => {
+      const a = document.createElement('a');
+      a.href = `video-player.html?v=${encodeURIComponent(v.id)}&list=crew`;
+      a.className = 'video-card';
+      a.innerHTML = `<img src="https://img.youtube.com/vi/${v.id}/hqdefault.jpg" alt="${v.title}" loading="lazy"><div class="body"><h3>${v.title}</h3><p>Watch in Video Player →</p></div>`;
+      grid.appendChild(a);
+    });
+  </script>
+</body>
+</html>
