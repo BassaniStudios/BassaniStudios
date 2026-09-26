@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Photo Studio | Bassani Studios</title>
-  <meta name="description" content="Photo Studio — 1033 digital photos. Dense grid, spotlight, slideshow and discovery mode.">
+  <meta name="description" content="Photo Studio — 1241 digital photos. Dense grid, spotlight, slideshow and discovery mode.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -334,7 +334,7 @@
     </p>
     <div class="ps-counter">
       <span>GALLERY</span>
-      <strong id="ps-total">1033</strong>
+      <strong id="ps-total">1241</strong>
       <span>PHOTOS</span>
     </div>
     <div class="ps-actions">
@@ -353,7 +353,7 @@
   <div class="ps-grid" id="ps-grid" aria-label="Photo grid"></div>
   <div class="ps-load-wrap" id="ps-load-wrap">
     <button type="button" class="ps-load-btn" id="ps-load-more" title="Load more photos">+</button>
-    <p class="ps-load-info" id="ps-load-info">Showing 0 of 1033</p>
+    <p class="ps-load-info" id="ps-load-info">Showing 0 of 1241</p>
   </div>
 
   <!-- SPOTLIGHT -->
@@ -363,7 +363,7 @@
     </div>
     <div class="ps-spot-nav">
       <button type="button" id="ps-spot-prev" aria-label="Previous">‹</button>
-      <span class="ps-spot-label" id="ps-spot-label">1 / 1033</span>
+      <span class="ps-spot-label" id="ps-spot-label">1 / 1241</span>
       <button type="button" id="ps-spot-next" aria-label="Next">›</button>
     </div>
   </div>
@@ -375,7 +375,7 @@
     <img id="ps-lb-img" src="" alt="Full photo">
     <button type="button" class="ps-lb-arrow ps-lb-next" id="ps-lb-next" aria-label="Next">›</button>
     <div class="ps-lb-bar">
-      <span class="ps-lb-count" id="ps-lb-count">1 / 1033</span>
+      <span class="ps-lb-count" id="ps-lb-count">1 / 1241</span>
       <button type="button" id="ps-lb-random">Random</button>
       <button type="button" id="ps-lb-open">Open full size</button>
     </div>
@@ -406,25 +406,26 @@
   <script>
   (function () {
     /* =========================================================
-       CONFIG — adjust when you have a working public URL
-       Folder on ImageKit: BASSANI STUDIOS PHOTO WEB
-       Files named: photo (1) … photo (1033)
-       Account: bassanistudio
+       CONFIG — ImageKit: bassanistudio / BASSANI STUDIOS PHOTO WEB
+       Files: bassanistudio_001.jpg … bassanistudio_1244.jpg
+       ~1241 files (some numbers removed as duplicates)
        ========================================================= */
-    const TOTAL = 1033;
+    const MAX_ID = 1244;       // highest file number
+    const TOTAL = 1241;        // approx. existing photos (display)
     const BATCH = 50;
 
     const BASE = 'https://ik.imagekit.io/bassanistudio/BASSANI%20STUDIOS%20PHOTO%20WEB/';
-    const NAME = (n) => `photo%20(${n})`;
+    const pad = (n) => String(n).padStart(3, '0');
+    const NAME = (n) => `bassanistudio_${pad(n)}`;
     const EXT = '.jpg';
 
-    // Thumbnail transform (lighter for dense grid)
     const THUMB = (n) => `${BASE}${NAME(n)}${EXT}?tr=w-320,h-320,fo-auto,q-65`;
     const FULL  = (n) => `${BASE}${NAME(n)}${EXT}?tr=w-1600,q-85`;
     const ORIG  = (n) => `${BASE}${NAME(n)}${EXT}`;
 
     /* State */
-    let loaded = 0;
+    let cursor = 0;            // last id attempted in grid load
+    let shownCount = 0;        // thumbs currently in grid
     let spotIndex = 1;
     let lbIndex = 1;
     let slideshowTimer = null;
@@ -436,34 +437,54 @@
     totalEl.textContent = TOTAL;
 
     function updateLoadInfo() {
-      loadInfo.textContent = `Showing ${loaded} of ${TOTAL}`;
-      loadBtn.disabled = loaded >= TOTAL;
-      if (loaded >= TOTAL) loadBtn.title = 'All photos loaded';
+      loadInfo.textContent = `Showing ${shownCount} of ${TOTAL}+`;
+      loadBtn.disabled = cursor >= MAX_ID;
+      if (cursor >= MAX_ID) loadBtn.title = 'All photos loaded';
     }
 
-    function addThumbs(from, to) {
-      const frag = document.createDocumentFragment();
-      for (let n = from; n <= to; n++) {
+    function addThumbs(count) {
+      let added = 0;
+      while (added < count && cursor < MAX_ID) {
+        cursor += 1;
+        const n = cursor;
         const div = document.createElement('div');
         div.className = 'ps-thumb';
         div.dataset.n = n;
-        div.innerHTML = `<img src="${THUMB(n)}" alt="Photo ${n}" loading="lazy" decoding="async"><span class="num">${n}</span>`;
+        const img = document.createElement('img');
+        img.src = THUMB(n);
+        img.alt = `Photo ${pad(n)}`;
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        img.onerror = () => {
+          div.remove();
+          // missing file (deleted duplicate) — don't count
+        };
+        img.onload = () => {
+          if (!div.dataset.counted) {
+            div.dataset.counted = '1';
+            shownCount += 1;
+            updateLoadInfo();
+          }
+        };
+        const num = document.createElement('span');
+        num.className = 'num';
+        num.textContent = pad(n);
+        div.appendChild(img);
+        div.appendChild(num);
         div.addEventListener('click', () => openLightbox(n));
-        frag.appendChild(div);
+        grid.appendChild(div);
+        added += 1;
       }
-      grid.appendChild(frag);
-      loaded = to;
       updateLoadInfo();
     }
 
     function loadMore() {
-      if (loaded >= TOTAL) return;
-      const next = Math.min(loaded + BATCH, TOTAL);
-      addThumbs(loaded + 1, next);
+      if (cursor >= MAX_ID) return;
+      addThumbs(BATCH);
     }
 
     /* Initial batch */
-    addThumbs(1, Math.min(BATCH, TOTAL));
+    addThumbs(BATCH);
     loadBtn.addEventListener('click', loadMore);
 
     /* Modes */
@@ -484,9 +505,10 @@
     }
 
     function showSpot(n) {
-      spotIndex = ((n - 1 + TOTAL) % TOTAL) + 1;
+      spotIndex = ((n - 1 + MAX_ID) % MAX_ID) + 1;
       spotImg.src = FULL(spotIndex);
-      spotLabel.textContent = `${spotIndex} / ${TOTAL}`;
+      spotLabel.textContent = `${pad(spotIndex)} / ${TOTAL}`;
+      spotImg.onerror = () => showSpot(spotIndex + 1);
     }
 
     btnGrid.addEventListener('click', () => setMode('grid'));
@@ -496,7 +518,7 @@
 
     /* Surprise me → random in lightbox */
     document.getElementById('btn-surprise').addEventListener('click', () => {
-      const n = Math.floor(Math.random() * TOTAL) + 1;
+      const n = Math.floor(Math.random() * MAX_ID) + 1;
       openLightbox(n);
     });
 
@@ -508,7 +530,7 @@
       }
       openLightbox(lbIndex || 1);
       slideshowTimer = setInterval(() => {
-        lbIndex = (lbIndex % TOTAL) + 1;
+        lbIndex = (lbIndex % MAX_ID) + 1;
         setLightbox(lbIndex);
       }, 3500);
       document.getElementById('btn-slideshow').textContent = 'Stop slideshow';
@@ -528,9 +550,10 @@
     const lbCount = document.getElementById('ps-lb-count');
 
     function setLightbox(n) {
-      lbIndex = ((n - 1 + TOTAL) % TOTAL) + 1;
+      lbIndex = ((n - 1 + MAX_ID) % MAX_ID) + 1;
       lbImg.src = FULL(lbIndex);
-      lbCount.textContent = `${lbIndex} / ${TOTAL}`;
+      lbCount.textContent = `${pad(lbIndex)} / ${TOTAL}`;
+      lbImg.onerror = () => setLightbox(lbIndex + 1);
     }
 
     function openLightbox(n) {
@@ -549,7 +572,7 @@
     document.getElementById('ps-lb-prev').addEventListener('click', () => setLightbox(lbIndex - 1));
     document.getElementById('ps-lb-next').addEventListener('click', () => setLightbox(lbIndex + 1));
     document.getElementById('ps-lb-random').addEventListener('click', () => {
-      setLightbox(Math.floor(Math.random() * TOTAL) + 1);
+      setLightbox(Math.floor(Math.random() * MAX_ID) + 1);
     });
     document.getElementById('ps-lb-open').addEventListener('click', () => {
       window.open(ORIG(lbIndex), '_blank');
@@ -570,7 +593,7 @@
       if (e.key === 'Escape') closeLightbox();
       if (e.key === 'ArrowLeft') setLightbox(lbIndex - 1);
       if (e.key === 'ArrowRight') setLightbox(lbIndex + 1);
-      if (e.key === 'r' || e.key === 'R') setLightbox(Math.floor(Math.random() * TOTAL) + 1);
+      if (e.key === 'r' || e.key === 'R') setLightbox(Math.floor(Math.random() * MAX_ID) + 1);
     });
   })();
   </script>
