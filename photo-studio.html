@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Photo Studio | Bassani Studios</title>
-  <meta name="description" content="Photo Studio — 1244 digital photos. Dense grid, spotlight, slideshow and discovery mode.">
+  <meta name="description" content="Photo Studio — 1033 digital photos. Dense grid, spotlight, slideshow and discovery mode.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -325,7 +325,7 @@
     </p>
     <div class="ps-counter">
       <span>GALLERY</span>
-      <strong id="ps-total">1244</strong>
+      <strong id="ps-total">1033</strong>
       <span>PHOTOS</span>
     </div>
     <div class="ps-actions">
@@ -344,7 +344,7 @@
   <div class="ps-grid" id="ps-grid" aria-label="Photo grid"></div>
   <div class="ps-load-wrap" id="ps-load-wrap">
     <button type="button" class="ps-load-btn" id="ps-load-more" title="Load more photos">+</button>
-    <p class="ps-load-info" id="ps-load-info">Showing 0 of 1244</p>
+    <p class="ps-load-info" id="ps-load-info">Showing 0 of 1033</p>
   </div>
 
   <!-- SPOTLIGHT -->
@@ -354,7 +354,7 @@
     </div>
     <div class="ps-spot-nav">
       <button type="button" id="ps-spot-prev" aria-label="Previous">‹</button>
-      <span class="ps-spot-label" id="ps-spot-label">1 / 1244</span>
+      <span class="ps-spot-label" id="ps-spot-label">1 / 1033</span>
       <button type="button" id="ps-spot-next" aria-label="Next">›</button>
     </div>
   </div>
@@ -366,21 +366,21 @@
     <img id="ps-lb-img" src="" alt="Full photo">
     <button type="button" class="ps-lb-arrow ps-lb-next" id="ps-lb-next" aria-label="Next">›</button>
     <div class="ps-lb-bar">
-      <span class="ps-lb-count" id="ps-lb-count">1 / 1244</span>
+      <span class="ps-lb-count" id="ps-lb-count">1 / 1033</span>
       <button type="button" id="ps-lb-random">Random</button>
       <button type="button" id="ps-lb-open">Open full size</button>
     </div>
   </div>
 
-  <div class="music-player">
-    <button id="music-play" aria-label="Play">▶</button>
+    <div class="music-player">
+    <button type="button" id="music-prev" aria-label="Previous track">‹</button>
+    <button type="button" id="music-play" aria-label="Play">▶</button>
+    <button type="button" id="music-next" aria-label="Next track">›</button>
     <div class="music-info">
       <strong>Studio Radio</strong>
-      <span>Ambient · Bassani Mix</span>
+      <span>Bassani Mix</span>
     </div>
-    <audio id="bg-music" loop preload="none">
-      <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    </audio>
+    <audio id="bg-music" preload="none"></audio>
   </div>
 
   <footer>
@@ -398,16 +398,15 @@
     /* =========================================================
        CONFIG — adjust when you have a working public URL
        Folder on ImageKit: BASSANI STUDIOS PHOTO WEB
-       Files named: photo (1), photo (2), ... photo (1244)
+       Files named: photo (1) … photo (1033)
+       Account: bassanistudio
        ========================================================= */
-    const TOTAL = 1244;
+    const TOTAL = 1033;
     const BATCH = 50;
 
-    // Try this pattern first. If images 404, change BASE + EXT.
-    // ImageKit public URL example (edit to match your real path):
-    const BASE = 'https://ik.imagekit.io/BassaniStudios/BASSANI%20STUDIOS%20PHOTO%20WEB/';
-    const NAME = (n) => `photo%20(${n})`;  // photo (1)
-    const EXT = '.jpg';                     // try .png / .jpeg / .webp if needed
+    const BASE = 'https://ik.imagekit.io/bassanistudio/BASSANI%20STUDIOS%20PHOTO%20WEB/';
+    const NAME = (n) => `photo%20(${n})`;
+    const EXT = '.jpg';
 
     // Thumbnail transform (lighter for dense grid)
     const THUMB = (n) => `${BASE}${NAME(n)}${EXT}?tr=w-320,h-320,fo-auto,q-65`;

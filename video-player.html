@@ -102,15 +102,15 @@
     <a href="index.html" class="btn btn-outline" style="margin-left:0.8rem;">Home</a>
   </div>
 
-  <div class="music-player">
-    <button id="music-play" aria-label="Play">▶</button>
+    <div class="music-player">
+    <button type="button" id="music-prev" aria-label="Previous track">‹</button>
+    <button type="button" id="music-play" aria-label="Play">▶</button>
+    <button type="button" id="music-next" aria-label="Next track">›</button>
     <div class="music-info">
       <strong>Studio Radio</strong>
-      <span>Ambient · Bassani Mix</span>
+      <span>Bassani Mix</span>
     </div>
-    <audio id="bg-music" loop preload="none">
-      <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    </audio>
+    <audio id="bg-music" preload="none"></audio>
   </div>
 
   <footer>
