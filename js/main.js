@@ -119,13 +119,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ----- MUSIC PLAYER (ImageKit /music playlist) -----
-  // First track always plays first; the rest are shuffled each page load.
+  // Entire playlist shuffled on each page load.
   const MUSIC_BASE = 'https://ik.imagekit.io/bassanistudio/music/';
-  const MUSIC_FIRST = {
-    title: 'Sam Fender, Olivia Dean — Rein Me In',
-    url: 'https://ik.imagekit.io/bassanistudio/music/Sam%20Fender,%20Olivia%20Dean%20-%20Rein%20Me%20In%20(Official%20Video)%20-%20SamFenderVEVO.mp3'
-  };
-  const MUSIC_REST = [
+  const MUSIC_ALL = [
+    { title: 'Sam Fender, Olivia Dean — Rein Me In', url: 'https://ik.imagekit.io/bassanistudio/music/Sam%20Fender,%20Olivia%20Dean%20-%20Rein%20Me%20In%20(Official%20Video)%20-%20SamFenderVEVO.mp3' },
     { title: "dodie — Someone Was Listening", url: "https://ik.imagekit.io/bassanistudio/music/'Someone%20Was%20Listening'%20by%20dodie%20-%20Life%20is%20Strange%20Double%20Exposure%20-%20Life%20is%20Strange.mp3" },
     { title: 'The Smashing Pumpkins — 1979 (Acoustic)', url: 'https://ik.imagekit.io/bassanistudio/music/1979%20(Acoustic)%20-%20The%20Smashing%20Pumpkins.mp3' },
     { title: 'Agridoce — Dançando', url: 'https://ik.imagekit.io/bassanistudio/music/Agridoce%20-%20Dan%C3%A7ando%20-%20Agridoce%20(1).mp3' },
@@ -154,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return a;
   }
 
-  const MUSIC_PLAYLIST = [MUSIC_FIRST, ...shuffleArray(MUSIC_REST)];
+  const MUSIC_PLAYLIST = shuffleArray(MUSIC_ALL);
 
   const playBtn = document.getElementById('music-play');
   const audio = document.getElementById('bg-music');
@@ -197,6 +194,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     loadTrack(0);
+
+    const vol = document.getElementById('music-vol');
+    if (vol) {
+      audio.volume = parseFloat(vol.value) || 0.7;
+      vol.addEventListener('input', () => {
+        audio.volume = parseFloat(vol.value);
+      });
+    }
 
     playBtn.addEventListener('click', () => {
       if (!MUSIC_PLAYLIST.length) return;
